@@ -62,34 +62,40 @@
 		</div>
 		
 		<script>
-			function LogIn() {
-				var loading = document.getElementsByClassName("loading")[0];
-				var button = document.getElementsByClassName("button")[0];
-				
-				var _login = document.getElementsByName("_login")[0].value;
-				var _password = document.getElementsByName("_password")[0].value;
-				loading.style.display = "block";
-				button.className = "button_diactive";
-				
-				var data = new FormData();
+
+		function LogIn() {
+			var loading = document.getElementsByClassName("loading")[0];
+			var button = document.getElementsByClassName("button")[0];
+
+
+
+			var _login = document.getElementsByName("_login")[0].value;
+			var _password = document.getElementsByName("_password")[0].value;
+			loading.style.display = "block";
+			button.className = "button_diactive";
+
+			var recaptchaResponse = grecaptcha.getResponse();
+			
+			if (recaptchaResponse.length) {
+				var data = new FormData(); data.append("g-recaptcha-response", recaptchaResponse);
 				data.append("login", _login);
 				data.append("password", _password);
-				
+
 				// AJAX запрос
 				$.ajax({
-					url         : 'ajax/login_user.php',
-					type        : 'POST', // важно!
-					data        : data,
-					cache       : false,
-					dataType    : 'html',
+					url: 'ajax/login_user.php',
+					type: 'POST', // важно!
+					data: data,
+					cache: false,
+					dataType: 'html',
 					// отключаем обработку передаваемых данных, пусть передаются как есть
-					processData : false,
+					processData: false,
 					// отключаем установку заголовка типа запроса. Так jQuery скажет серверу что это строковой запрос
-					contentType : false, 
+					contentType: false,
 					// функция успешного ответа сервера
 					success: function (_data) {
-						console.log("Авторизация прошла успешно, id: " +_data);
-						if(_data == "") {
+						console.log("Авторизация прошла успешно, id: " + _data);
+						if (_data == "") {
 							loading.style.display = "none";
 							button.className = "button";
 							alert("Логин или пароль не верный.");
@@ -101,27 +107,30 @@
 						}
 					},
 					// функция ошибки
-					error: function( ){
+					error: function () {
 						console.log('Системная ошибка!');
 						loading.style.display = "none";
 						button.className = "button";
 					}
 				});
+			} else {
+				alert("Капчу тыкнуть надо");
 			}
-			
-			function PressToEnter(e) {
-				if (e.keyCode == 13) {
-					var _login = document.getElementsByName("_login")[0].value;
-					var _password = document.getElementsByName("_password")[0].value;
-					
-					if(_password != "") {
-						if(_login != "") {
-							LogIn();
-						}
+		}
+
+		function PressToEnter(e) {
+			if (e.keyCode == 13) {
+				var _login = document.getElementsByName("_login")[0].value;
+				var _password = document.getElementsByName("_password")[0].value;
+
+				if (_password != "") {
+					if (_login != "") {
+						LogIn();
 					}
 				}
 			}
-			
-		</script>
+		}
+
+	</script>
 	</body>
 </html>
