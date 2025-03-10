@@ -17,7 +17,7 @@
 	<head> 
 		<meta charset="utf-8">
 		<title> Авторизация </title>
-		
+		<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 		<script src="https://code.jquery.com/jquery-1.8.3.js"></script>
 		<link rel="stylesheet" href="style.css">
 	</head>
