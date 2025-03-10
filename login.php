@@ -47,6 +47,11 @@
 					<input type="button" class="button" value="Войти" onclick="LogIn()"/>
 					<img src = "img/loading.gif" class="loading"/>
 				</div>
+				<!-- RECAPTCHA -->
+			<center>
+				<div class="g-recaptcha" style="margin-top: 20px;"
+					data-sitekey="6LfELu8qAAAAABfojdBE-D9--vg137dT8e7HPF_j"></div>
+			</center>
 				
 				<div class="footer">
 					© КГАПОУ "Авиатехникум", 2020
